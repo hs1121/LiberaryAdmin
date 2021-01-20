@@ -4,8 +4,8 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
+
 
 import com.example.liberaryadmin.database.DataAccessObjects.BookDao;
 import com.example.liberaryadmin.database.DataAccessObjects.CustomerDao;
@@ -16,7 +16,7 @@ import com.example.liberaryadmin.database.ObjectClasses.IssuedBook;
 
 import java.util.List;
 
-public class LiberaryViewModel extends ViewModel implements BookDao, CustomerDao, IssueBookDao {
+public class LiberaryViewModel extends AndroidViewModel implements BookDao, CustomerDao, IssueBookDao {
 
     private Repository repositoryInstance;
     private LiveData<List<Book>> bookList;
@@ -24,6 +24,7 @@ public class LiberaryViewModel extends ViewModel implements BookDao, CustomerDao
     private LiveData<List<IssuedBook>> issueList;
 
     public LiberaryViewModel(@NonNull Application application){
+        super(application);
         repositoryInstance= new Repository(application);
         bookList=repositoryInstance.getAllBooks();
         customerList=repositoryInstance.getAllCustomer();

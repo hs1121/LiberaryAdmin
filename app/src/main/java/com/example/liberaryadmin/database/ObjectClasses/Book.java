@@ -3,10 +3,13 @@ package com.example.liberaryadmin.database.ObjectClasses;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.ByteArrayOutputStream;
+
 @Entity(tableName = "Book")
 public class Book {
-    private String  name,author,publishYear;
+    private String  name,author,publishYear,volume;
     private Integer quantity;
+    private byte[] image;
     @PrimaryKey(autoGenerate = true)
     private Integer id=0;
 
@@ -14,11 +17,29 @@ public class Book {
         this.id = id;
     }
 
-    public Book(String name, String author, String publishYear, Integer quantity) {
+    public Book(String name, String author, String publishYear, Integer quantity,String volume,byte[] image) {
         this.name = name;
         this.author = author;
         this.publishYear = publishYear;
         this.quantity = quantity;
+        this.volume= volume;
+        this.image= image;
+    }
+
+    public byte[]getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 
     public String getName() {

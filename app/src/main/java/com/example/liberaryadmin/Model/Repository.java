@@ -1,6 +1,7 @@
 package com.example.liberaryadmin.Model;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
@@ -41,7 +42,8 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
 
     @Override
     public void insertBook(Book book) {
-        bookDao.insertBook(book);
+      //  bookDao.insertBook(book);
+        new InsertNoteAsyncTask(bookDao).execute(book);
     }
 
     @Override
@@ -100,6 +102,19 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
     public LiveData<List<IssuedBook>> getAllIssues() {
         return issueList;
     }
-}
 
+private static class InsertNoteAsyncTask extends AsyncTask<Book,Void,Void> {
+    BookDao noteDao;
+
+    private InsertNoteAsyncTask(BookDao noteDao) {
+        this.noteDao = noteDao;
+    }
+
+    @Override
+    protected Void doInBackground(Book... notes) {
+        noteDao.insertBook(notes[0]);
+        return null;
+    }
+}
+}
 
