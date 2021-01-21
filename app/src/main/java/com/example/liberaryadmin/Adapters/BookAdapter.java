@@ -14,21 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.liberaryadmin.Converter;
 import com.example.liberaryadmin.R;
 import com.example.liberaryadmin.database.ObjectClasses.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
 
     private static final String ETAG = "Adapter Book error";
-    private List<Book> bookList;
-    private Context context;
+    private List<Book> bookList=new ArrayList<>();
 
-    public BookAdapter(Context context) {
-        this.context = context;
-    }
+
 
     public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
@@ -38,7 +37,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @org.jetbrains.annotations.NotNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.book_list_layout,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_list_layout,parent,false);
         return new BookViewHolder(view);
     }
 
@@ -47,17 +46,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull BookAdapter.BookViewHolder holder, int position) {
         Book book=bookList.get(position);
         holder.name.setText(book.getName());
-        holder.author.setText(book.getAuthor());
+        holder.author.setText("~By "+book.getAuthor());
         holder.volume.setText(book.getVolume());
-        holder.quantity.setText(book.getQuantity());
+        holder.quantity.setText("Qnt. "+book.getQuantity().toString());
         try {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(book.getImage(), 0, book.getImage().length);
+            Bitmap bitmap= Converter.byteToImage(book.getImage());
             holder.image.setImageBitmap(bitmap);
         }
         catch(Exception e){
             Log.e(ETAG,e.getMessage());
         }
-
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Customer {
     private String name,phone;
     private String registeredDate,membershipStartDate,membershipEndDate;
     @PrimaryKey(autoGenerate = true)
-    private Integer id=0;
+    private Integer id;
 
     public void setId(Integer id) {
         this.id = id;

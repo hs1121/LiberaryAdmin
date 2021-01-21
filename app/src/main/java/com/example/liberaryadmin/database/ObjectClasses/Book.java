@@ -1,5 +1,6 @@
 package com.example.liberaryadmin.database.ObjectClasses;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,9 +10,10 @@ import java.io.ByteArrayOutputStream;
 public class Book {
     private String  name,author,publishYear,volume;
     private Integer quantity;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
     @PrimaryKey(autoGenerate = true)
-    private Integer id=0;
+    private Integer id;
 
     public void setId(Integer id) {
         this.id = id;

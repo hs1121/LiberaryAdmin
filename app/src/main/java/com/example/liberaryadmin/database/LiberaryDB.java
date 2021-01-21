@@ -14,7 +14,7 @@ import com.example.liberaryadmin.database.ObjectClasses.Book;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
 import com.example.liberaryadmin.database.ObjectClasses.IssuedBook;
 
-@Database(entities = {Book.class, Customer.class, IssuedBook.class},version = 1, exportSchema = false)
+@Database(entities = {Book.class, Customer.class, IssuedBook.class},version = 1)
 public abstract class LiberaryDB extends RoomDatabase {
     public static LiberaryDB dbInstance;
     public abstract IssueBookDao issueBookDao();

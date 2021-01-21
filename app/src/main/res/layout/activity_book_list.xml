@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BookListActivity">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/ActivityBookList_add"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_anchor="@id/ActivityBookList_recyclerView"
+        app:layout_anchorGravity="bottom|right|end"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,15 +43,6 @@
 
 
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        android:id="@+id/ActivityBookList_add"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@id/ActivityBookList_recyclerView"
-        app:layout_anchorGravity="bottom|right|end"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
