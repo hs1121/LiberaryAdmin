@@ -12,12 +12,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.Book;
@@ -33,6 +36,7 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
     private static final int IMG_TAG = 1;
     private TextView t_name,t_author,t_year,t_volume;
     private CircleImageView i_image;
+    private ImageView b_back;
     private Button b_button;
     private CardView cv_selectImage;
 
@@ -55,10 +59,12 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         i_image=findViewById(R.id.AddBook_image);
         b_button=findViewById(R.id.AddBook_addButton);
         cv_selectImage=findViewById(R.id.AddBook_addImage);
+        b_back=findViewById(R.id.AddBook_back);
         viewModelInstance=new ViewModelProvider(this).get(LiberaryViewModel.class);
 
         b_button.setOnClickListener(this);
         cv_selectImage.setOnClickListener(this);
+        b_back.setOnClickListener(this);
 
     }
 
@@ -70,6 +76,9 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.AddBook_addImage:
                 addImage();
+                break;
+            case R.id.AddBook_back:
+                super.onBackPressed();
                 break;
         }
     }
@@ -117,5 +126,7 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
             // TODO add get quantity feature from database
         Book book=new Book(name,author,year,1,volume,image);
         viewModelInstance.insertBook(book);
+        Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 }

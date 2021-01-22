@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_margin="5dp"
-        android:id="@+id/BookList_book"
+        android:id="@+id/CustomerList_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -21,8 +21,8 @@
             android:layout_width="60dp"
             android:layout_height="80dp"
             android:layout_weight=".5"
-            android:id="@+id/BookList_image"
-            android:src="@drawable/ic_liberary_logo"/>
+            android:id="@+id/CustomerList_image"
+            android:src="@drawable/ic_customer_profile"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="180dp"
@@ -38,39 +38,30 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/BookList_bookName"
+                    android:id="@+id/CustomerList_CustomerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BOOK NAME"
+                    android:text="CUSTOMER NAME"
                     android:textColor="@color/textcolor"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     />
 
-                <TextView
-                    android:id="@+id/BookList_authorName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textcolor"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reg. Date : "
+                android:textColor="@color/textcolor"
 
-                    android:text="author name" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textcolor"
-
-                    android:layout_marginTop="1dp"
-                    android:textSize="16sp"
-                    android:id="@+id/BookList_volume"
-                    android:text="VOL 1"/>
+                android:id="@+id/CustomerList_regDate"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="last Date : "
                     android:textColor="@color/textcolor"
 
-                    android:id="@+id/BookList_quantity"
-                    android:text="Qnt. 5/10"/>
+                    android:id="@+id/CustomerList_membershipEndDate"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

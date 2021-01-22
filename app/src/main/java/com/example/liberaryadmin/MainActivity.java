@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.liberaryadmin.Model.LiberaryViewModel;
+import com.example.liberaryadmin.database.ObjectClasses.Customer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(),BookListActivity.class));
                 break;
             case R.id.MainActivity_customers:
+                startActivity(new Intent(getApplicationContext(), CustomerListActivity.class));
                 break;
             case R.id.MainActivity_issues:
                 break;

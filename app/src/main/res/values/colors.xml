@@ -13,5 +13,6 @@
     <color name="outline">#40000000</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="edittext_backdround">#1AF8F2F2</color>
+    <color name="textcolor">#343232</color>
     <color name="button_color">@color/gradientTop</color>
 </resources>

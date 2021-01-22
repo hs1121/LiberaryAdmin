@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddBookActivity">
+    tools:context=".AddCustomerActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,39 +16,39 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/AddBook_back"
+                android:id="@+id/AddCustomer_back"
                 android:src="@drawable/ic_back_arrow"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/AddBook_addImage"
+            android:id="@+id/AddCustomer_addImage"
             android:backgroundTint="@color/gradientTop"
             app:cardCornerRadius="20dp"
             android:layout_gravity="center"
             >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/AddBook_image"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_liberary_logo"/>
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ADD IMAGE +"
-                android:textColor="@color/outline"
-                android:layout_gravity="center"/>
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/AddCustomer_image"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_liberary_logo"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD IMAGE +"
+                    android:textColor="@color/outline"
+                    android:layout_gravity="center"/>
 
-        </LinearLayout>
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
 
@@ -56,20 +56,22 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
-            android:id="@+id/AddBook_name"
+            android:id="@+id/AddCustomer_name"
             android:layout_marginTop="80dp"
             android:background="@drawable/background_login_input_ext"
-            android:hint="Book Name"
+            android:hint="Full Name"
             android:paddingStart="10dp"
-             />
+            />
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/AddBook_author"
+            android:layout_height="80dp"
+            android:id="@+id/AddCustomer_address"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:maxLines="3"
+            android:inputType="textMultiLine"
             android:background="@drawable/background_login_input_ext"
-            android:hint="Author"
+            android:hint="Address"
             android:paddingStart="10dp" />
 
         <LinearLayout
@@ -82,35 +84,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:id="@+id/AddBook_volume"
+                android:id="@+id/AddCustomer_phone"
                 android:inputType="number"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/background_login_input_ext"
-                android:hint="Volume"
+                android:hint="Phone"
                 android:paddingStart="10dp"
-                 />
-            <com.google.android.material.textfield.TextInputEditText
+                />
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/AddBook_publishYear"
-                android:inputType="number"
+                android:id="@+id/AddCustomer_membershipDuration"
                 android:layout_weight="1"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/background_login_input_ext"
-                android:hint="Year published"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:paddingStart="10dp"
+                android:layout_marginHorizontal="20dp"
                 />
 
 
         </LinearLayout>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/AddBook_addButton"
+            android:id="@+id/AddCustomer_addButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="40dp"
             android:paddingStart="10dp"
-            android:text="Add book"
+            android:text="Add Customer "
             app:backgroundTint="@color/button_color"
             android:textColor="#fff"
             />

@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Customer")
 public class Customer {
-    private String name,phone;
+    private String name,phone,address;
     private String registeredDate,membershipStartDate,membershipEndDate;
+    private byte[] image;
     @PrimaryKey(autoGenerate = true)
     private Integer id;
 
@@ -16,12 +17,30 @@ public class Customer {
         this.id = id;
     }
 
-    public Customer(String name, String phone, String registeredDate, String membershipStartDate, String membershipEndDate) {
+    public Customer(String name, String phone, String address, String registeredDate, String membershipStartDate, String membershipEndDate,byte[] image) {
         this.name = name;
         this.phone = phone;
+        this.address = address;
         this.registeredDate = registeredDate;
         this.membershipStartDate = membershipStartDate;
         this.membershipEndDate = membershipEndDate;
+        this.image=image;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {
