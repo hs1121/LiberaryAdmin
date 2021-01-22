@@ -9,10 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.liberaryadmin.Converter;
-import com.example.liberaryadmin.CustomDate;
+import com.example.liberaryadmin.Helpers.Converter;
 import com.example.liberaryadmin.R;
-import com.example.liberaryadmin.database.ObjectClasses.Book;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
 
 import java.util.ArrayList;

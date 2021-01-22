@@ -1,4 +1,4 @@
-package com.example.liberaryadmin;
+package com.example.liberaryadmin.Helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

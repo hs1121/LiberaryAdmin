@@ -1,8 +1,6 @@
 package com.example.liberaryadmin.Adapters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.liberaryadmin.Converter;
+import com.example.liberaryadmin.Helpers.Converter;
 import com.example.liberaryadmin.R;
 import com.example.liberaryadmin.database.ObjectClasses.Book;
 
