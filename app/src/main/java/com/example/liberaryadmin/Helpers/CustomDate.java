@@ -63,12 +63,15 @@ public class CustomDate{
         if(date1.year<date2.year) {
             return true;
         }
-        else {
-            if (date1.month < date2.month) {
+        else if(date1.month < date2.month) {
                 return true;
             }
+        else if(date1.day<date2.day) {
+            return true;
         }
-        return false;
+        else {
+            return false;
+        }
     }
 
 

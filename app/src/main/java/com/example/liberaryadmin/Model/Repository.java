@@ -23,6 +23,8 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
     private static final int INSERT_FLAG=0;
     private static final int DELETE_FLAG=1;
     private static final int UPDATE_FLAG=2;
+    private static final int FILTER_FLAG=3;
+
 
 
     private BookDao bookDao;

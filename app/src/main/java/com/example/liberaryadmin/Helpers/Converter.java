@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import org.jetbrains.annotations.NotNull;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 

@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -125,18 +126,17 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
         membershipStartDate=date.dateToString();
         membershipEndDate=date.getExtendedDate(membershipDuration).dateToString();
         BitmapDrawable bitmapDrawable;
-        try {
              bitmapDrawable = (BitmapDrawable) i_image.getDrawable();
-        }catch (Exception e){
-            bitmapDrawable= (BitmapDrawable) getDrawable(R.drawable.ic_liberary_logo);
-        }
         Bitmap bmp = bitmapDrawable.getBitmap();
         byte[] image = Converter.imageToByte(bmp);
-
-        // TODO add get quantity feature from database
-        Customer customer=new Customer(name,phone,address,registerDate,membershipStartDate,membershipEndDate,image);
-        viewModelInstance.insertCustomer(customer);
-        Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        if(image.length>150000){
+            Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Customer customer = new Customer(name, phone, address, registerDate, membershipStartDate, membershipEndDate, image);
+            viewModelInstance.insertCustomer(customer);
+            Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+        }
     }
 }

@@ -117,10 +117,14 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         year=t_year.getText().toString();
         Bitmap bmp = ((BitmapDrawable)i_image.getDrawable()).getBitmap();
         byte[] image = Converter.imageToByte(bmp);
+        if(image.length>150000){
+            Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
+        }else {
             // TODO add get quantity feature from database
-        Book book=new Book(name,author,year,1,volume,image);
-        viewModelInstance.insertBook(book);
-        Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+            Book book = new Book(name, author, year, 1, volume, image);
+            viewModelInstance.insertBook(book);
+            Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+        }
     }
 }

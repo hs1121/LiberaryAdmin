@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 
 import com.example.liberaryadmin.database.DataAccessObjects.BookDao;
@@ -14,6 +15,7 @@ import com.example.liberaryadmin.database.ObjectClasses.Book;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
 import com.example.liberaryadmin.database.ObjectClasses.IssuedBook;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LiberaryViewModel extends AndroidViewModel implements BookDao, CustomerDao, IssueBookDao {
@@ -72,6 +74,8 @@ repositoryInstance.deleteBook(book);
         return customerList;
     }
 
+
+
     @Override
     public void insertNewIssue(IssuedBook issuedBook) {
             repositoryInstance.insertNewIssue(issuedBook);
@@ -91,4 +95,6 @@ repositoryInstance.deleteBook(book);
     public LiveData<List<IssuedBook>> getAllIssues() {
         return issueList;
     }
+
+
 }
