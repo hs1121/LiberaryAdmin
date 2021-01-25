@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class BookListActivity extends AppCompatActivity {
+
+    public static final int ACTIVITY_TAG=103;
+
     private RecyclerView recyclerView;
     private LiberaryViewModel viewModel;
     private BookAdapter adapter;

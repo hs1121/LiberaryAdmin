@@ -5,8 +5,11 @@ import android.app.AsyncNotedAppOp;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
+import com.example.liberaryadmin.CustomerListActivity;
 import com.example.liberaryadmin.database.DataAccessObjects.BookDao;
 import com.example.liberaryadmin.database.DataAccessObjects.CustomerDao;
 import com.example.liberaryadmin.database.DataAccessObjects.IssueBookDao;
@@ -42,13 +45,9 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
         issueBookDao=liberaryDB.issueBookDao();
 
         bookList=bookDao.getAllBooks();
-        customerList=customerDao.getAllCustomer();
+        customerList= customerDao.getAllCustomer();
         issueList=issueBookDao.getAllIssues();
     }
-
-
-
-
     @Override
     public void insertBook(Book book) {
         new BookAsyncTask(bookDao,INSERT_FLAG).execute(book);
@@ -145,7 +144,6 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
     private static class CustomerAsyncTask extends AsyncTask<Customer,Void,Void> {
         CustomerDao customerDao;
         Integer flag;
-
 
         private CustomerAsyncTask(CustomerDao customerDao, Integer flag) {
             this.customerDao = customerDao;

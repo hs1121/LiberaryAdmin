@@ -1,17 +1,47 @@
 package com.example.liberaryadmin.database.ObjectClasses;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 
 
 @Entity(tableName = "Customer")
-public class Customer {
+public class Customer implements Parcelable {
     private String name,phone,address;
     private String registeredDate,membershipStartDate,membershipEndDate;
     private byte[] image;
     @PrimaryKey(autoGenerate = true)
     private Integer id;
+
+    protected Customer(Parcel in) {
+        name = in.readString();
+        phone = in.readString();
+        address = in.readString();
+        registeredDate = in.readString();
+        membershipStartDate = in.readString();
+        membershipEndDate = in.readString();
+        image = in.createByteArray();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+    }
+
+    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
+        @Override
+        public Customer createFromParcel(Parcel in) {
+            return new Customer(in);
+        }
+
+        @Override
+        public Customer[] newArray(int size) {
+            return new Customer[size];
+        }
+    };
 
     public void setId(Integer id) {
         this.id = id;
@@ -87,4 +117,25 @@ public class Customer {
         return id;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(phone);
+        dest.writeString(address);
+        dest.writeString(registeredDate);
+        dest.writeString(membershipStartDate);
+        dest.writeString(membershipEndDate);
+        dest.writeByteArray(image);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+    }
 }

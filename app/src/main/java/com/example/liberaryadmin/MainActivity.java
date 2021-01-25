@@ -14,7 +14,7 @@ import com.example.liberaryadmin.database.ObjectClasses.Customer;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private CardView cv_books,cv_customer,cv_issues,cv_membership;
+    private CardView cv_books,cv_customer,cv_issues,cv_membership,cv_newIssue;
 
 
     @Override
@@ -29,11 +29,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cv_customer=findViewById(R.id.MainActivity_customers);
         cv_issues=findViewById(R.id.MainActivity_issues);
         cv_membership=findViewById(R.id.MainActivity_membership);
+        cv_newIssue=findViewById(R.id.MainActivity_newIssue);
 
         cv_books.setOnClickListener(this);
         cv_customer.setOnClickListener(this);
         cv_issues.setOnClickListener(this);
         cv_membership.setOnClickListener(this);
+        cv_newIssue.setOnClickListener(this);
+
 
     }
 
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         switch (v.getId()){
+            case R.id.MainActivity_newIssue:
+                startActivity(new Intent(getApplicationContext(),NewIssueActivity.class));
+                break;
             case R.id.MainActivity_books:
                 startActivity(new Intent(getApplicationContext(),BookListActivity.class));
                 break;

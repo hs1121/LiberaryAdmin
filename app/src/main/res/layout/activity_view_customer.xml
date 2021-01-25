@@ -4,26 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddCustomerActivity">
+    tools:context=".ViewCustomerActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/AddCustomer_back"
-                android:src="@drawable/ic_back_arrow"
-                android:layout_marginStart="10dp"/>
-        </LinearLayout>A
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/ViewCustomer_back"
+                    android:src="@drawable/ic_back_arrow"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:id="@+id/ViewCustomer_edit_select"
+                    android:textColor="@color/white"
+                   android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:text="Edit"
+                    android:focusable="true" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/AddCustomer_addImage"
+            android:id="@+id/ViewCustomer_ViewImage"
             android:backgroundTint="@color/gradientTop"
             app:cardCornerRadius="20dp"
             android:layout_gravity="center"
@@ -34,44 +56,41 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:orientation="vertical">
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/AddCustomer_image"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/ViewCustomer_image"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:src="@drawable/ic_liberary_logo"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ADD IMAGE +"
-                    android:textColor="@color/outline"
-                    android:layout_gravity="center"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
-            android:id="@+id/AddCustomer_name"
+            android:id="@+id/ViewCustomer_name"
             android:layout_marginTop="80dp"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:background="@drawable/background_login_input_ext"
-            android:hint="Full Name"
+            android:gravity="center_vertical"
             android:paddingStart="10dp"
             />
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:id="@+id/AddCustomer_address"
+            android:id="@+id/ViewCustomer_address"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            style="@style/TextAppearance.AppCompat.Medium"
+
             android:maxLines="3"
             android:inputType="textMultiLine"
+            android:gravity="center_vertical"
             android:background="@drawable/background_login_input_ext"
-            android:hint="Address"
             android:paddingStart="10dp" />
 
         <LinearLayout
@@ -80,40 +99,33 @@
             android:layout_height="wrap_content"
             android:weightSum="2"
             android:orientation="horizontal">
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:id="@+id/AddCustomer_phone"
-                android:inputType="number"
+                android:id="@+id/ViewCustomer_phone"
+                style="@style/TextAppearance.AppCompat.Medium"
+
                 android:layout_marginHorizontal="20dp"
+                android:gravity="center_vertical"
                 android:background="@drawable/background_login_input_ext"
-                android:hint="Phone"
                 android:paddingStart="10dp"
                 />
-            <Spinner
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/AddCustomer_membershipDuration"
                 android:layout_weight="1"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:paddingStart="10dp"
+                android:id="@+id/ViewCustomer_duration"
+                style="@style/TextAppearance.AppCompat.Medium"
+
                 android:layout_marginHorizontal="20dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/background_login_input_ext"
+                android:paddingStart="10dp"
                 />
 
 
         </LinearLayout>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/AddCustomer_addButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="40dp"
-            android:paddingStart="10dp"
-            android:text="Add Customer "
-            app:backgroundTint="@color/button_color"
-            android:textColor="#fff"
-            />
 
 
 

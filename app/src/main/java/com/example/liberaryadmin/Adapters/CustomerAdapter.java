@@ -21,7 +21,7 @@ import java.util.List;
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
 
     private List<Customer> customerList=new ArrayList<>();
-
+    private OnCostomerClickListner listner;
     public void setCustomerList(List<Customer> customerList) {
         this.customerList = customerList;
     }
@@ -48,22 +48,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         else {
             holder.membershipEndDate.setText("Membership till : " + customer.getMembershipEndDate());
         }
+
     }
 
     @Override
     public int getItemCount() {
         return customerList.size();
-    }
-
-    public void filterList(String s,List<Customer> customers) {
-        List<Customer> list=new ArrayList<>();
-        for (Customer customer:customers) {
-            if(customer.getName().contains(s)){
-                list.add(customer);
-            }
-        }
-        customerList=list;
-        notifyDataSetChanged();
     }
 
     public class CustomerViewHolder extends RecyclerView.ViewHolder {
@@ -75,6 +65,19 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             regDate=itemView.findViewById(R.id.CustomerList_regDate);
             membershipEndDate=itemView.findViewById(R.id.CustomerList_membershipEndDate);
             image=itemView.findViewById(R.id.CustomerList_image);
+
+            itemView.setOnClickListener(view ->{
+                listner.onClick(customerList.get(getAdapterPosition()));
+            });
+
         }
+
+    }
+
+    public interface OnCostomerClickListner{
+        void onClick(Customer customer);
+    }
+    public void setOnCustomerClickListner(OnCostomerClickListner listner){
+            this.listner=listner;
     }
 }

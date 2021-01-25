@@ -1,5 +1,6 @@
-package com.example.liberaryadmin;
+ package com.example.liberaryadmin;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
 
 import com.example.liberaryadmin.Adapters.CustomerAdapter;
+import com.example.liberaryadmin.Helpers.Converter;
 import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerListActivity extends AppCompatActivity {
+
+    public static final int ACTIVITY_TAG=104;
+
     private RecyclerView recyclerView;
     private LiberaryViewModel viewModel;
     private CustomerAdapter adapter;
@@ -35,16 +41,35 @@ public class CustomerListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
         init();
-        viewModel.getAllCustomer().observe(this, new Observer<List<Customer>>() {
-            @Override
-            public void onChanged(List<Customer> Customers) {
-                customerList=Customers;
-                adapter.setCustomerList(Customers);
-                adapter.notifyDataSetChanged();
+        viewModel.getAllCustomer().observe(this, Customers -> {
+            customerList=Customers;
+            adapter.setCustomerList(Customers);
+            adapter.notifyDataSetChanged();
+        });
+    }
 
+    private void init() {
+        b_addButton=findViewById(R.id.ActivityCustomerList_add);
+        et_search=findViewById(R.id.ActivityCustomerList_search);
+        recyclerView=findViewById(R.id.ActivityCustomerList_recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new CustomerAdapter();
+        recyclerView.setAdapter(adapter);
+        viewModel=new ViewModelProvider(this).get(LiberaryViewModel.class);
+
+        b_addButton.setOnClickListener(v -> {
+            if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
+                startActivityForResult(new Intent(getApplicationContext(), AddCustomerActivity.class),NewIssueActivity.ACTIVITY_TAG);
+            }
+            else {
+                startActivity(new Intent(getApplicationContext(), AddCustomerActivity.class));
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,24 +83,44 @@ public class CustomerListActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                   adapter.filterList(s.toString(),customerList);
+                viewModel.getFilterCustomerList(customerList,s.toString()).observe(CustomerListActivity.this, new Observer<List<Customer>>() {
+                    @Override
+                    public void onChanged(List<Customer> list) {
+                        adapter.setCustomerList(list);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
+        });
+        adapter.setOnCustomerClickListner(new CustomerAdapter.OnCostomerClickListner() {
+            @Override
+            public void onClick(Customer customer) {
+             /*   Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
+                intent.putExtra("name",customer.getName());
+                intent.putExtra("address",customer.getAddress());
+                intent.putExtra("phone",customer.getPhone());
+                intent.putExtra("duration",customer.getMembershipEndDate());
+                intent.putExtra("image", customer.getImage());
+                startActivity(intent);
+
+              */
+                Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
+                intent.putExtra("customer",customer);
+                startActivityForResult(intent,NewIssueActivity.ACTIVITY_TAG);
+            }
+
         });
     }
 
-
-
-    private void init() {
-        b_addButton=findViewById(R.id.ActivityCustomerList_add);
-        et_search=findViewById(R.id.ActivityCustomerList_search);
-        recyclerView=findViewById(R.id.ActivityCustomerList_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new CustomerAdapter();
-        recyclerView.setAdapter(adapter);
-        viewModel=new ViewModelProvider(this).get(LiberaryViewModel.class);
-
-        b_addButton.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(),AddCustomerActivity.class));
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==NewIssueActivity.ACTIVITY_TAG&&resultCode==RESULT_OK&&data!=null){
+            Intent intent=new Intent();
+            Customer customer=data.getParcelableExtra("customer");
+            intent.putExtra("customer",customer);
+            setResult(RESULT_OK,intent);
+            finish();
+        }
     }
 }

@@ -24,6 +24,8 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
     private LiveData<List<Book>> bookList;
     private LiveData<List<Customer>> customerList;
     private LiveData<List<IssuedBook>> issueList;
+    public static int SAR_CALL_TAG=0; // startActivityforResult
+    public static int SAR_ID_TAG=0;
 
     public LiberaryViewModel(@NonNull Application application){
         super(application);
@@ -31,6 +33,18 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
         bookList=repositoryInstance.getAllBooks();
         customerList=repositoryInstance.getAllCustomer();
         issueList=repositoryInstance.getAllIssues();
+    }
+
+    public LiveData<List<Customer>> getFilterCustomerList(List<Customer> list,String s){
+        List<Customer> list1=new ArrayList<>();
+        MutableLiveData<List<Customer>> newList= new MutableLiveData<List<Customer>>();
+        for (Customer customer:list) {
+            if(customer.getName().contains(s)){
+               list1.add(customer);
+            }
+        }
+        newList.setValue(list1);
+        return  newList;
     }
 
 
@@ -73,7 +87,6 @@ repositoryInstance.deleteBook(book);
     public LiveData<List<Customer>> getAllCustomer() {
         return customerList;
     }
-
 
 
     @Override
