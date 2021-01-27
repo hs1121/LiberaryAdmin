@@ -26,17 +26,147 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
-        <include layout="@layout/customer_list_layout"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="10dp"
             android:id="@+id/NewIssueActivity_customer"
-            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/gradientTop"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_height="80dp"
+                    android:layout_weight=".5"
+                    android:id="@+id/NewIssueActivity_CustomerImage"
+                    android:src="@drawable/ic_customer_profile"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="180dp"
+                    android:backgroundTint="@color/gradientBottom"
+                    app:cardCornerRadius="10dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/NewIssueActivity_CustomerName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select customer"
+                            android:textColor="@color/textcolor"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reg. Date : "
+                            android:textColor="@color/textcolor"
+
+                            android:id="@+id/NewIssueActivity_regDate"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="last Date : "
+                            android:textColor="@color/textcolor"
+
+                            android:id="@+id/NewIssueActivity_membershipEndDate"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"/>
-        <include layout="@layout/book_list_layout"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:id="@+id/NewIssueActivity_book"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_marginHorizontal="10dp"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/gradientTop"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_height="80dp"
+                    android:layout_weight=".5"
+                    android:id="@+id/NewIssueActivity_bookImage"
+                    android:src="@drawable/ic_liberary_logo"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="180dp"
+                    android:backgroundTint="@color/gradientBottom"
+                    app:cardCornerRadius="10dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/NewIssueActivity_bookName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Book"
+                            android:textColor="@color/textcolor"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/NewIssueActivity_authorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textcolor"
+
+                            android:text="author name" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textcolor"
+
+                            android:layout_marginTop="1dp"
+                            android:textSize="16sp"
+                            android:id="@+id/NewIssueActivity_bookVolume"
+                            android:text="VOL 1"/>
+
+
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,6 +187,7 @@
            android:layout_marginTop="10dp"
            android:datePickerMode="spinner"
            android:layout_gravity="center_horizontal"
+
            android:id="@+id/NewIssueActivity_date"
            android:calendarViewShown="false"/>
         </androidx.cardview.widget.CardView>

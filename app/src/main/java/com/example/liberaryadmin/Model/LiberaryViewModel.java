@@ -26,6 +26,8 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
     private LiveData<List<IssuedBook>> issueList;
     public static int SAR_CALL_TAG=0; // startActivityforResult
     public static int SAR_ID_TAG=0;
+    public static Customer customer;
+    public static Book book;
 
     public LiberaryViewModel(@NonNull Application application){
         super(application);

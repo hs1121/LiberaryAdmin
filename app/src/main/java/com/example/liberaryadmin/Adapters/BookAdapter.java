@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     private static final String ETAG = "Adapter Book error";
     private List<Book> bookList=new ArrayList<>();
-
+    private OnBookClickListner onBookClickListner;
 
 
     public void setBookList(List<Book> bookList) {
@@ -73,6 +74,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             volume=itemView.findViewById(R.id.BookList_volume);
             quantity=itemView.findViewById(R.id.BookList_quantity);
             image=itemView.findViewById(R.id.BookList_image);
+            itemView.setOnClickListener(view->{
+                onBookClickListner.onClick(bookList.get(getAdapterPosition()));
+            });
         }
+    }
+    public interface OnBookClickListner{
+        void onClick(Book book);
+    }
+    public void setOnBookClickListner(OnBookClickListner onBookClickListner){
+        this.onBookClickListner=onBookClickListner;
     }
 }

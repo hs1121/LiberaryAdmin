@@ -79,6 +79,7 @@ public class ViewCustomerActivity extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.putExtra("customer",customer);
                 setResult(RESULT_OK,intent);
+                LiberaryViewModel.SAR_CALL_TAG=0;
                 finish();
             }
         });

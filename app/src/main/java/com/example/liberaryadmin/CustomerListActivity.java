@@ -24,7 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerListActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+ public class CustomerListActivity extends AppCompatActivity {
 
     public static final int ACTIVITY_TAG=104;
 
@@ -33,6 +35,7 @@ public class CustomerListActivity extends AppCompatActivity {
     private CustomerAdapter adapter;
     private FloatingActionButton b_addButton;
     private EditText et_search;
+    private CircleImageView i_back;
     private List<Customer> customerList=new ArrayList<>();
 
 
@@ -46,10 +49,14 @@ public class CustomerListActivity extends AppCompatActivity {
             adapter.setCustomerList(Customers);
             adapter.notifyDataSetChanged();
         });
+        i_back.setOnClickListener(view ->{
+            super.onBackPressed();
+        });
     }
 
     private void init() {
         b_addButton=findViewById(R.id.ActivityCustomerList_add);
+        i_back=findViewById(R.id.ActivityCustomerList_back);
         et_search=findViewById(R.id.ActivityCustomerList_search);
         recyclerView=findViewById(R.id.ActivityCustomerList_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -95,15 +102,6 @@ public class CustomerListActivity extends AppCompatActivity {
         adapter.setOnCustomerClickListner(new CustomerAdapter.OnCostomerClickListner() {
             @Override
             public void onClick(Customer customer) {
-             /*   Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
-                intent.putExtra("name",customer.getName());
-                intent.putExtra("address",customer.getAddress());
-                intent.putExtra("phone",customer.getPhone());
-                intent.putExtra("duration",customer.getMembershipEndDate());
-                intent.putExtra("image", customer.getImage());
-                startActivity(intent);
-
-              */
                 Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
                 intent.putExtra("customer",customer);
                 startActivityForResult(intent,NewIssueActivity.ACTIVITY_TAG);
