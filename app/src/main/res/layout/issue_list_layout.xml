@@ -75,6 +75,7 @@
                         />
                 </RelativeLayout>
 
+
                 <TextView
                     android:id="@+id/IssueList_bookName"
                     android:layout_width="wrap_content"
@@ -93,6 +94,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
+                <TextView
+                    android:id="@+id/IssueList_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone : 5432663"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    />
 
 
 

@@ -2,14 +2,13 @@ package com.example.liberaryadmin;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +37,31 @@ public class ReturnIssueList extends AppCompatActivity {
         setContentView(R.layout.activity_return_issue_list);
         init();
         model.getAllIssues().observe(this, list -> {
-            this.list=list;
-            adapter.getIssueList(list);
+            this.list = list;
+            adapter.setIssueList(list);
             adapter.notifyDataSetChanged();
         });
+
+        t_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    model.getFilterIssuedBookList(list,s.toString()).observe(ReturnIssueList.this, list -> {
+                        adapter.setIssueList(list);
+                        adapter.notifyDataSetChanged();
+                    });
+            }
+        });
+
     }
 
     private void init() {

@@ -33,6 +33,15 @@
                 android:src="@drawable/ic_back_arrow"
                 android:id="@+id/ActivityBookList_back"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/background_login_input_ext"
+                android:paddingStart="10dp"
+                android:hint="Search"
+                android:id="@+id/ActivityBookList_search"/>
+
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ActivityBookList_recyclerView"

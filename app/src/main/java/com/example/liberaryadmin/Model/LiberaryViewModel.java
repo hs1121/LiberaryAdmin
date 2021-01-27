@@ -41,8 +41,31 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
         List<Customer> list1=new ArrayList<>();
         MutableLiveData<List<Customer>> newList= new MutableLiveData<List<Customer>>();
         for (Customer customer:list) {
-            if(customer.getName().contains(s)){
+            if(customer.getName().contains(s)||customer.getPhone().contains(s)){
                list1.add(customer);
+            }
+        }
+        newList.setValue(list1);
+        return  newList;
+    }
+
+    public LiveData<List<Book>> getFilterBookList(List<Book> list,String s){
+        List<Book> list1=new ArrayList<>();
+        MutableLiveData<List<Book>> newList= new MutableLiveData<List<Book>>();
+        for (Book book:list) {
+            if(book.getName().contains(s)){
+                list1.add(book);
+            }
+        }
+        newList.setValue(list1);
+        return  newList;
+    }
+    public LiveData<List<IssuedBook>> getFilterIssuedBookList(List<IssuedBook> list,String s){
+        List<IssuedBook> list1=new ArrayList<>();
+        MutableLiveData<List<IssuedBook>> newList= new MutableLiveData<List<IssuedBook>>();
+        for (IssuedBook issuedBook:list) {
+            if(issuedBook.getId().toString().contains(s)||issuedBook.getPhone().contains(s)){
+                list1.add(issuedBook);
             }
         }
         newList.setValue(list1);

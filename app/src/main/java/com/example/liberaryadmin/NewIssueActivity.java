@@ -133,7 +133,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
         LiberaryViewModel model=new ViewModelProvider(this).get(LiberaryViewModel.class);
         String date=d_date.getDayOfMonth()+"-"+d_date.getMonth()+1+"-"+d_date.getYear();
          IssuedBook issuedBook=new IssuedBook(book.getId(),customer.getId()
-                 ,new CustomDate(System.currentTimeMillis()).dateToString(),date,customer.getName(),book.getName());
+                 ,new CustomDate(System.currentTimeMillis()).dateToString(),date,customer.getName(),book.getName(),customer.getPhone());
         model.insertNewIssue(issuedBook);
          Toast.makeText(this, "issue uploaded", Toast.LENGTH_SHORT).show();
         finish();

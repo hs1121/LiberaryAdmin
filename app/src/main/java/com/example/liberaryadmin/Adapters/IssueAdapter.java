@@ -33,10 +33,11 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         holder.t_bookName.setText("Book : "+issue.getBookName());
         holder.t_issuedDate.setText(issue.getIssuedDate());
         holder.t_returnDate.setText(issue.getReturnDate());
+        holder.t_phone.setText("Phone : "+issue.getPhone());
 
     }
 
-    public void getIssueList(List<IssuedBook> list){
+    public void setIssueList(List<IssuedBook> list){
         this.list=list;
     }
 
@@ -46,7 +47,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
     }
 
     public class IssueViewHolder extends RecyclerView.ViewHolder {
-        private TextView t_id,t_bookName,t_customerName,t_issuedDate,t_returnDate;
+        private TextView t_id,t_bookName,t_customerName,t_issuedDate,t_returnDate,t_phone;
         public IssueViewHolder(@NonNull View itemView) {
             super(itemView);
             t_id=itemView.findViewById(R.id.IssueList_id);
@@ -54,6 +55,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
             t_customerName=itemView.findViewById(R.id.IssueList_customerName);
             t_issuedDate=itemView.findViewById(R.id.IssueList_issueDate);
             t_returnDate=itemView.findViewById(R.id.IssueList_returnDate);
+            t_phone=itemView.findViewById(R.id.IssueList_phone);
             itemView.setOnClickListener(view->{
                 issueClickListner.onClick(list.get(getAdapterPosition()));
             });

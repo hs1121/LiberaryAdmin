@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.Book;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,24 +35,24 @@ public class BookListActivity extends AppCompatActivity {
     private FloatingActionButton b_addButton;
     private ImageView i_back;
     private TextView t_search;
+    private List<Book> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         init();
-        viewModel.getAllBooks().observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-               adapter.setBookList(books);
-               adapter.notifyDataSetChanged();
-            }
+        viewModel.getAllBooks().observe(this, books -> {
+            list=books;
+           adapter.setBookList(books);
+           adapter.notifyDataSetChanged();
         });
     }
 
     private void init() {
         b_addButton=findViewById(R.id.ActivityBookList_add);
         i_back=findViewById(R.id.ActivityBookList_back);
+        t_search=findViewById(R.id.ActivityBookList_search);
         recyclerView=findViewById(R.id.ActivityBookList_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
          adapter=new BookAdapter();
@@ -70,6 +73,26 @@ public class BookListActivity extends AppCompatActivity {
                 else{
                     startActivity(new Intent(getApplicationContext(),ViewBookActivity.class));
                 }
+        });
+
+        t_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                viewModel.getFilterBookList(list,s.toString()).observe(BookListActivity.this, (Observer<List<Book>>) books -> {
+                    adapter.setBookList(books);
+                    adapter.notifyDataSetChanged();
+                });
+            }
         });
     }
 

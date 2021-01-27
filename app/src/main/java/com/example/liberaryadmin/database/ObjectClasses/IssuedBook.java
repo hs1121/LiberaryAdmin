@@ -8,7 +8,7 @@ import java.sql.Date;
 @Entity(tableName = "IssuedBook")
 public class IssuedBook {
     private Integer bookId,customerId;
-    private String issuedDate,returnDate,customerName,bookName;
+    private String issuedDate,returnDate,customerName,bookName,phone;
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;
@@ -17,13 +17,22 @@ public class IssuedBook {
         this.id = id;
     }
 
-    public IssuedBook(Integer bookId, Integer customerId, String issuedDate, String returnDate, String customerName, String bookName) {
+    public IssuedBook(Integer bookId, Integer customerId, String issuedDate, String returnDate, String customerName, String bookName,String phone) {
         this.bookId = bookId;
         this.customerId = customerId;
         this.issuedDate = issuedDate;
         this.returnDate = returnDate;
         this.customerName = customerName;
         this.bookName = bookName;
+        this.phone=phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getReturnDate() {

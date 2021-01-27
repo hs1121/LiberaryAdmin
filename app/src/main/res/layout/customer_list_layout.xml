@@ -46,6 +46,14 @@
                     android:textSize="25sp"
                     android:textStyle="bold"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="Phone : 769006676 "
+                    android:textColor="@color/textcolor"
+                    android:id="@+id/CustomerList_phone"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -39,6 +39,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     public void onBindViewHolder(@NonNull CustomerViewHolder holder, int position) {
                 Customer customer=customerList.get(position);
                 holder.name.setText(customer.getName());
+                holder.phone.setText("Phone : "+customer.getPhone());
         holder.regDate.setText("Reg. Date : "+customer.getRegisteredDate());
         holder.image.setImageBitmap(Converter.byteToImage(customer.getImage()));
                 //TODO add a if statement to change membershipEndDate form membership till to expired on
@@ -57,7 +58,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     }
 
     public class CustomerViewHolder extends RecyclerView.ViewHolder {
-        private TextView name,regDate,membershipEndDate;
+        private TextView name,regDate,membershipEndDate,phone;
         private ImageView image;
         public CustomerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +66,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             regDate=itemView.findViewById(R.id.CustomerList_regDate);
             membershipEndDate=itemView.findViewById(R.id.CustomerList_membershipEndDate);
             image=itemView.findViewById(R.id.CustomerList_image);
+            phone=itemView.findViewById(R.id.CustomerList_phone);
 
             itemView.setOnClickListener(view ->{
                 listner.onClick(customerList.get(getAdapterPosition()));
