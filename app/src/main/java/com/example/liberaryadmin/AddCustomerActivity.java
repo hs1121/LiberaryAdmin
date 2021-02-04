@@ -34,7 +34,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
     private ImageView b_back;
     private Button b_button;
     private CardView cv_selectImage;
-
+    private Customer customer;
     private LiberaryViewModel viewModelInstance;
 
 
@@ -42,7 +42,16 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer);
+
         init();
+        if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG){
+            customer=LiberaryViewModel.customer;
+            t_address.setText(customer.getAddress());
+            t_phone.setText(customer.getPhone());
+            i_image.setImageBitmap(Converter.byteToImage(customer.getImage()));
+            t_name.setText(customer.getName());
+            b_button.setText("Update Customer");
+        }
     }
 
     private void init() {
@@ -134,8 +143,16 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
         }
         else {
             Customer customer = new Customer(name, phone, address, registerDate, membershipStartDate, membershipEndDate, image);
-            viewModelInstance.insertCustomer(customer);
-            Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+            LiberaryViewModel.customer=customer;
+            if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG) {
+                customer.setId(this.customer.getId());
+                viewModelInstance.updateCustomer(customer);
+                Toast.makeText(this, "Customer updated", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                viewModelInstance.insertCustomer(customer);
+                Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show();
+            }
             super.onBackPressed();
         }
     }

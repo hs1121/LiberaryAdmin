@@ -39,6 +39,7 @@ public class ViewCustomerActivity extends AppCompatActivity {
     }
 
     private void setValues() {
+
         customer= intent.getParcelableExtra("customer");
         t_name.setText(customer.getName());
         t_address.setText(customer.getAddress());
@@ -69,6 +70,7 @@ public class ViewCustomerActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         );
+
     }
 
     @Override
@@ -80,6 +82,12 @@ public class ViewCustomerActivity extends AppCompatActivity {
                 intent.putExtra("customer",customer);
                 setResult(RESULT_OK,intent);
                 LiberaryViewModel.SAR_CALL_TAG=0;
+                finish();
+            }
+            else{
+                LiberaryViewModel.SAR_CALL_TAG=CustomerListActivity.ACTIVITY_TAG;
+                LiberaryViewModel.customer=customer;
+                startActivity(new Intent(getApplicationContext(),AddCustomerActivity.class));
                 finish();
             }
         });

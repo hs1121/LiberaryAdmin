@@ -66,8 +66,8 @@ public class BookListActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),AddBookActivity.class));
         });
         adapter.setOnBookClickListner(book -> {
+            LiberaryViewModel.book=book;
                 if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
-                    LiberaryViewModel.book=book;
                     startActivityForResult(new Intent(getApplicationContext(),ViewBookActivity.class),NewIssueActivity.ACTIVITY_TAG);
                 }
                 else{

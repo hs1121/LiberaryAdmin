@@ -33,6 +33,7 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView b_back;
     private Button b_button;
     private CardView cv_selectImage;
+    private Book book;
 
     private LiberaryViewModel viewModelInstance;
 
@@ -43,6 +44,14 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
         init();
+        if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){
+            book=LiberaryViewModel.book;
+            t_name.setText(book.getName());
+            t_author.setText(book.getAuthor());
+            t_year.setText(book.getPublishYear());
+            t_volume.setText(book.getVolume());
+            i_image.setImageBitmap(Converter.byteToImage(book.getImage()));
+        }
     }
 
     private void init() {
@@ -110,20 +119,26 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void addBook() {
-        String name,author,volume="Volume : ",year;
+        String name,author,volume,year;
         name=t_name.getText().toString();
         author=t_author.getText().toString();
-        volume+=t_volume.getText().toString();
+        volume=t_volume.getText().toString();
         year=t_year.getText().toString();
         Bitmap bmp = ((BitmapDrawable)i_image.getDrawable()).getBitmap();
         byte[] image = Converter.imageToByte(bmp);
         if(image.length>150000){
             Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
         }else {
-            // TODO add get quantity feature from database
             Book book = new Book(name, author, year, 1, volume, image);
-            viewModelInstance.insertBook(book);
-            Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+            if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){
+                book.setId(this.book.getId());
+                viewModelInstance.updateBook(book);
+                Toast.makeText(this, "Book updated", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                viewModelInstance.insertBook(book);
+                Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
+            }
             super.onBackPressed();
         }
     }

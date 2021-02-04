@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private CardView cv_books,cv_customer,cv_returnIssue,cv_membership,cv_newIssue;
+   public static final int EXPIRED_MEMBER_TAG=5;
 
 
     @Override
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cv_books=findViewById(R.id.MainActivity_books);
         cv_customer=findViewById(R.id.MainActivity_customers);
         cv_returnIssue=findViewById(R.id.MainActivity_returnIssue);
-        cv_membership=findViewById(R.id.MainActivity_membership);
+        cv_membership=findViewById(R.id.MainActivity_expiredMembers);
         cv_newIssue=findViewById(R.id.MainActivity_newIssue);
 
         cv_books.setOnClickListener(this);
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.MainActivity_returnIssue:
                 startActivity(new Intent(getApplicationContext(),ReturnIssueList.class));
                 break;
-            case R.id.MainActivity_membership:
+            case R.id.MainActivity_expiredMembers:
+                LiberaryViewModel.SAR_CALL_TAG=EXPIRED_MEMBER_TAG;
+                startActivity(new Intent(getApplicationContext(), CustomerListActivity.class));
                 break;
         }
 

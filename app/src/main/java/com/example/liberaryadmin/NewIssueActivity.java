@@ -1,6 +1,7 @@
  package com.example.liberaryadmin;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
     private DatePicker d_date;
     private Button b_button;
     private ImageView i_back;
+    private LinearLayout linearLayout;
 
     private TextView t_customerName,t_bookName,t_registerDate,t_membershipEndDate,t_authorName,t_bookVolume;
     private CircleImageView i_bookImage,i_customerImage;
@@ -74,6 +77,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
         cv_book=findViewById(R.id.NewIssueActivity_book);
         i_customerImage=findViewById(R.id.NewIssueActivity_CustomerImage);
         i_bookImage=findViewById(R.id.NewIssueActivity_bookImage);
+        linearLayout=findViewById(R.id.NewIssueActivity_linearLayout);
 
         cv_customer.setOnClickListener(this);
         cv_book.setOnClickListener(this);
@@ -131,12 +135,35 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
      private void uploadIssue() {
         LiberaryViewModel model=new ViewModelProvider(this).get(LiberaryViewModel.class);
-        String date=d_date.getDayOfMonth()+"-"+d_date.getMonth()+1+"-"+d_date.getYear();
+        String date;
+        int month;
+        month=d_date.getMonth()+1;
+        date=d_date.getDayOfMonth()+"-"+month+"-"+d_date.getYear();
          IssuedBook issuedBook=new IssuedBook(book.getId(),customer.getId()
                  ,new CustomDate(System.currentTimeMillis()).dateToString(),date,customer.getName(),book.getName(),customer.getPhone());
         model.insertNewIssue(issuedBook);
-         Toast.makeText(this, "issue uploaded", Toast.LENGTH_SHORT).show();
-        finish();
+        screenShot();
+     }
+
+     private void screenShot() {
+             View v = linearLayout;
+             v.setBackground(getDrawable(R.drawable.gradient_background));
+             v.setDrawingCacheEnabled(true);
+         AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.newIssueDialog);
+         View itemView=getLayoutInflater().inflate(R.layout.snapshot_dialog_layout,null);
+         dialog.setView(itemView).show();
+         ImageView imageView=itemView.findViewById(R.id.Dialog_snapshot);
+         Button button=itemView.findViewById(R.id.Dialog_okButton);
+
+            Bitmap bitmap=Bitmap.createBitmap(v.getDrawingCache());
+            if(bitmap!=null)
+            imageView.setImageBitmap(bitmap);
+
+         button.setOnClickListener(view->{
+             Toast.makeText(this, "issue uploaded", Toast.LENGTH_SHORT).show();
+             onBackPressed();
+         });
+
      }
 
 

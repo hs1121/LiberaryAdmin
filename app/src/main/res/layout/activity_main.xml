@@ -209,63 +209,17 @@
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        >
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:id="@+id/MainActivity_issues"
-            android:layout_weight="1"
+            android:id="@+id/MainActivity_expiredMembers"
             app:cardBackgroundColor="@color/gradientTop"
             app:cardCornerRadius="10dp"
-            app:cardElevation="30dp"
-
-            app:strokeColor="#fff"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-
-                    android:src="@drawable/ic_liberary_logo" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="5dp"
-                    android:background="#fff" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="5dp"
-                    android:text="Issued Books"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:id="@+id/MainActivity_membership"
-            app:cardBackgroundColor="@color/gradientTop"
-            app:cardCornerRadius="10dp"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             app:cardElevation="30dp"
             app:strokeColor="#fff"
             app:strokeWidth="1dp">
@@ -296,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="Membership"
+                    android:text="Expired Members"
                     android:textColor="#fff"
                     android:textStyle="bold" />
             </LinearLayout>

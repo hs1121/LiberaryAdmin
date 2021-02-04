@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.liberaryadmin.Helpers.Converter;
 import com.example.liberaryadmin.Helpers.CustomDate;
+import com.example.liberaryadmin.MainActivity;
+import com.example.liberaryadmin.Model.LiberaryViewModel;
+import com.example.liberaryadmin.NewIssueActivity;
 import com.example.liberaryadmin.R;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
 
@@ -23,7 +26,20 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     private List<Customer> customerList=new ArrayList<>();
     private OnCostomerClickListner listner;
     public void setCustomerList(List<Customer> customerList) {
-        this.customerList = customerList;
+
+        if(LiberaryViewModel.SAR_CALL_TAG== MainActivity.EXPIRED_MEMBER_TAG){
+            List<Customer> filterList=new ArrayList<>();
+            for(Customer customer:customerList){
+                if(CustomDate.isLess(CustomDate.stringToDate(customer.getMembershipEndDate()),new CustomDate(System.currentTimeMillis()))){
+                    filterList.add(customer);
+                }
+            }
+            this.customerList=filterList;
+        }
+        else{
+            this.customerList = customerList;
+        }
+
     }
 
 
@@ -45,6 +61,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 //TODO add a if statement to change membershipEndDate form membership till to expired on
         if(CustomDate.isLess(CustomDate.stringToDate(customer.getMembershipEndDate()),new CustomDate(System.currentTimeMillis()))){
             holder.membershipEndDate.setText("Membership expired on : "+customer.getMembershipEndDate());
+            if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG)
+                holder.unclickable();
         }
         else {
             holder.membershipEndDate.setText("Membership till : " + customer.getMembershipEndDate());
@@ -72,6 +90,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 listner.onClick(customerList.get(getAdapterPosition()));
             });
 
+        }
+        public void unclickable(){
+            itemView.setClickable(false);
+            itemView.setAlpha(0.5f);
         }
 
     }

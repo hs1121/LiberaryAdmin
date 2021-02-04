@@ -6,13 +6,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.liberaryadmin.Adapters.IssueAdapter;
+import com.example.liberaryadmin.Helpers.Converter;
+import com.example.liberaryadmin.Helpers.CustomDate;
 import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.IssuedBook;
 
@@ -30,6 +36,7 @@ public class ReturnIssueList extends AppCompatActivity {
     private IssueAdapter adapter;
 
     private List<IssuedBook> list;
+    IssuedBook issuedBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +85,49 @@ public class ReturnIssueList extends AppCompatActivity {
             super.onBackPressed();
         });
         adapter.setOnIssueClickListner(issuedBook->{
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setTitle("Confirm Return").setPositiveButton("Yes", (dialog, which) -> {
-                model.deleteIssue(issuedBook);
-                Toast.makeText(this, "Returned Successfully", Toast.LENGTH_SHORT).show();
-            }).setNegativeButton("No",null);
-            builder.show();
+            this.issuedBook=issuedBook;
+            createDialog();
         });
+
+    }
+    private void createDialog(){
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.MyDialogTheme);
+        View itemView=getLayoutInflater().inflate(R.layout.return_book_dialog_layout,null);
+        dialog.setView(itemView);
+        TextView t_bookName,t_customerName,t_phone,t_id,t_penalty;
+        Button b_cancel,b_return;
+
+        t_bookName=itemView.findViewById(R.id.Dialog_bookName);
+        t_customerName=itemView.findViewById(R.id.Dialog_CustomerName);
+        t_phone=itemView.findViewById(R.id.Dialog_phone);
+        t_id=itemView.findViewById(R.id.Dialog_Id);
+        b_cancel=itemView.findViewById(R.id.Dialog_cancel);
+        b_return=itemView.findViewById(R.id.Dialog_return);
+        t_penalty=itemView.findViewById(R.id.Dialog_penalty);
+
+
+        t_bookName.setText("Book : "+issuedBook.getBookName());
+        t_customerName.setText("Customer : "+issuedBook.getCustomerName());
+        t_phone.setText("Phone : "+issuedBook.getPhone());
+        t_id.setText("Issue Id : "+issuedBook.getId().toString());
+        int difference=CustomDate.difference(new CustomDate(System.currentTimeMillis()).dateToString(),issuedBook.getReturnDate());
+        if(difference>0){
+            t_penalty.setVisibility(View.VISIBLE);
+            t_penalty.setText("PENALTY : "+difference*50);
+        }
+
+        final AlertDialog ad=dialog.show();
+
+        b_cancel.setOnClickListener(view->{
+            ad.dismiss();;
+        });
+        b_return.setOnClickListener(view->{
+
+            model.deleteIssue(issuedBook);
+            Toast.makeText(this, "Issue Returned", Toast.LENGTH_SHORT).show();
+            ad.dismiss();
+        });
+
+
     }
 }

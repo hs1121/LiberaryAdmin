@@ -14,5 +14,15 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/gradient_background</item>
     </style>
+    <style name="MyDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:background">@color/gradientTop</item>
+        <item name="titleTextColor">@color/gradientBottom</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Large</item>
+    </style>
+    <style name="newIssueDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:background">@color/transparent</item>
+        <item name="titleTextColor">@color/gradientBottom</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Large</item>
+    </style>
 
 </resources>

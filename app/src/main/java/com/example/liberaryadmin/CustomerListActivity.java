@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 
@@ -72,6 +73,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
                 startActivity(new Intent(getApplicationContext(), AddCustomerActivity.class));
             }
         });
+        if(LiberaryViewModel.SAR_CALL_TAG==MainActivity.EXPIRED_MEMBER_TAG)
+            b_addButton.setVisibility(View.GONE);
     }
 
     @Override

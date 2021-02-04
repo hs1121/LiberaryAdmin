@@ -52,6 +52,10 @@ public class CustomDate{
     }
     public static @NotNull Integer difference(@NotNull CustomDate date1, @NotNull CustomDate date2){
         return Math.abs(date1.year-date2.year)*12-Math.abs(date1.month-date2.month);
+        //    Date date01=new Date(date1.timeInMs);
+        //Date date02=new Date(date2.timeInMs);
+        // TODO : fix it to date difference level
+
     }
 
     public static @NotNull Integer difference(String date1, String date2){

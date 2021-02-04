@@ -30,8 +30,15 @@ public class ViewBookActivity extends AppCompatActivity {
         init();
         setBook();
         t_editSelect.setOnClickListener(view->{
-            setResult(RESULT_OK);
-            LiberaryViewModel.SAR_CALL_TAG=0;
+            if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG) {
+                setResult(RESULT_OK);
+                LiberaryViewModel.SAR_CALL_TAG = 0;
+
+            }
+            else {
+                LiberaryViewModel.SAR_CALL_TAG=BookListActivity.ACTIVITY_TAG;
+                startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
+            }
             finish();
         });
     }
@@ -46,6 +53,10 @@ public class ViewBookActivity extends AppCompatActivity {
         b_back=findViewById(R.id.ViewBook_back);
         t_editSelect=findViewById(R.id.ViewBook_edit_select);
 
+        b_back.setOnClickListener(view ->{
+            super.onBackPressed();
+        });
+
         book= LiberaryViewModel.book;
 
         if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
@@ -57,7 +68,7 @@ public class ViewBookActivity extends AppCompatActivity {
         t_name.setText(book.getName());
         t_author.setText(book.getAuthor());
         t_year.setText(book.getPublishYear());
-        t_volume.setText(book.getVolume());
+        t_volume.setText("Volume : "+book.getVolume());
         i_image.setImageBitmap(Converter.byteToImage(book.getImage()));
     }
 }
