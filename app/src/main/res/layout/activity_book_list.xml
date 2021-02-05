@@ -30,6 +30,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_back_arrow"
                 android:id="@+id/ActivityBookList_back"/>
 

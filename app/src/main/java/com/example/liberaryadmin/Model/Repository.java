@@ -23,21 +23,23 @@ import java.util.List;
 
 public class Repository implements BookDao,CustomerDao,IssueBookDao {
 
+    // Flags to different operations. Helps reduce asynctask use
     private static final int INSERT_FLAG=0;
     private static final int DELETE_FLAG=1;
     private static final int UPDATE_FLAG=2;
-    private static final int FILTER_FLAG=3;
 
 
-
+// Data access objects instances
     private BookDao bookDao;
     private CustomerDao customerDao;
     private IssueBookDao issueBookDao;
 
+    // live data instances
     private LiveData<List<Book>> bookList;
     private LiveData<List<Customer>> customerList;
     private LiveData<List<IssuedBook>> issueList;
 
+    // Constructor
     public Repository(Application application){
         LiberaryDB liberaryDB=LiberaryDB.getInstance(application);
         bookDao=liberaryDB.bookDao();
@@ -48,6 +50,8 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
         customerList= customerDao.getAllCustomer();
         issueList=issueBookDao.getAllIssues();
     }
+
+    // Book data functions
     @Override
     public void insertBook(Book book) {
         new BookAsyncTask(bookDao,INSERT_FLAG).execute(book);
@@ -68,6 +72,8 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
         return bookList;
     }
 
+
+    // Customer data functions
     @Override
     public void insertCustomer(Customer customer) {
             new CustomerAsyncTask(customerDao,INSERT_FLAG).execute(customer);
@@ -89,6 +95,7 @@ public class Repository implements BookDao,CustomerDao,IssueBookDao {
     }
 
 
+    // Issue data functions
     @Override
     public void insertNewIssue(IssuedBook issuedBook) {
         new IssueAsyncTask(issueBookDao,INSERT_FLAG).execute(issuedBook);

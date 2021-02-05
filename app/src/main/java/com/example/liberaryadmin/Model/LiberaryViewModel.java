@@ -20,15 +20,17 @@ import java.util.List;
 
 public class LiberaryViewModel extends AndroidViewModel implements BookDao, CustomerDao, IssueBookDao {
 
-    private Repository repositoryInstance;
+    private Repository repositoryInstance;  // instance of repository
+
+    // Lifecycle independent data and liveDate .Helps deal with config change and modification of data.
     private LiveData<List<Book>> bookList;
     private LiveData<List<Customer>> customerList;
     private LiveData<List<IssuedBook>> issueList;
-    public static int SAR_CALL_TAG=0; // startActivityforResult
-    public static int SAR_ID_TAG=0;
+    public static int SAR_CALL_TAG=0; // saves activity tags . used to check which activity is the caller .Helps in space saving.
     public static Customer customer;
     public static Book book;
 
+    // constructor
     public LiberaryViewModel(@NonNull Application application){
         super(application);
         repositoryInstance= new Repository(application);
@@ -36,7 +38,7 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
         customerList=repositoryInstance.getAllCustomer();
         issueList=repositoryInstance.getAllIssues();
     }
-
+    // filtered lists . Used to sort data based on search.
     public LiveData<List<Customer>> getFilterCustomerList(List<Customer> list,String s){
         List<Customer> list1=new ArrayList<>();
         MutableLiveData<List<Customer>> newList= new MutableLiveData<List<Customer>>();
@@ -48,7 +50,6 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
         newList.setValue(list1);
         return  newList;
     }
-
     public LiveData<List<Book>> getFilterBookList(List<Book> list,String s){
         List<Book> list1=new ArrayList<>();
         MutableLiveData<List<Book>> newList= new MutableLiveData<List<Book>>();
@@ -72,7 +73,7 @@ public class LiberaryViewModel extends AndroidViewModel implements BookDao, Cust
         return  newList;
     }
 
-
+        // Book data functions
     @Override
     public void insertBook(Book book) {
         repositoryInstance.insertBook(book);
@@ -93,6 +94,8 @@ repositoryInstance.deleteBook(book);
         return  bookList;
     }
 
+
+    // customer data functions
     @Override
     public void insertCustomer(Customer customer) {
                 repositoryInstance.insertCustomer(customer);
@@ -114,6 +117,7 @@ repositoryInstance.deleteBook(book);
     }
 
 
+     //  Issue data functions
     @Override
     public void insertNewIssue(IssuedBook issuedBook) {
             repositoryInstance.insertNewIssue(issuedBook);

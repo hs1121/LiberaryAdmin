@@ -20,7 +20,7 @@ public abstract class LiberaryDB extends RoomDatabase {
     public abstract IssueBookDao issueBookDao();
     public abstract BookDao bookDao();
     public abstract CustomerDao customerDao();
-
+    // Constructor
     public static synchronized LiberaryDB getInstance(Context context){
         if(dbInstance==null){
             dbInstance= Room.databaseBuilder(context.getApplicationContext(),LiberaryDB.class,"Liberary Database")

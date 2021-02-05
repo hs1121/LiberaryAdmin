@@ -36,7 +36,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueViewHol
         holder.t_phone.setText("Phone : "+issue.getPhone());
 
     }
-
+    // get issued books list
     public void setIssueList(List<IssuedBook> list){
         this.list=list;
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.Customer;
@@ -17,23 +18,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView cv_books,cv_customer,cv_returnIssue,cv_membership,cv_newIssue;
    public static final int EXPIRED_MEMBER_TAG=5;
 
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
     }
 
-    @Override
+    @Override // resets all values in LibraryViewModel class to prevent false calling or false data
     protected void onResume() {
         super.onResume();
         LiberaryViewModel.SAR_CALL_TAG=0;
         LiberaryViewModel.book=null;
         LiberaryViewModel.customer=null;
     }
-
+    //Initialises views and variables
     private void init() {
         cv_books=findViewById(R.id.MainActivity_books);
         cv_customer=findViewById(R.id.MainActivity_customers);
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(),ReturnIssueList.class));
                 break;
             case R.id.MainActivity_expiredMembers:
-                LiberaryViewModel.SAR_CALL_TAG=EXPIRED_MEMBER_TAG;
+                LiberaryViewModel.SAR_CALL_TAG=EXPIRED_MEMBER_TAG; // to tell that which activity has called intent
                 startActivity(new Intent(getApplicationContext(), CustomerListActivity.class));
                 break;
         }
@@ -75,4 +79,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override  // double press back to exit  function
+    public void onBackPressed()
+    {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+        {
+            super.onBackPressed();
+            return;
+        }
+        else { Toast.makeText(getBaseContext(), "Tap back button in order to exit", Toast.LENGTH_SHORT).show(); }
+
+        mBackPressed = System.currentTimeMillis();
+    }
 }

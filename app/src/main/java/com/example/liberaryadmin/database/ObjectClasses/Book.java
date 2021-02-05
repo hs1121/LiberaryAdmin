@@ -1,5 +1,7 @@
 package com.example.liberaryadmin.database.ObjectClasses;
 
+import android.content.Intent;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,9 +11,18 @@ import java.io.ByteArrayOutputStream;
 @Entity(tableName = "Book")
 public class Book {
     private String  name,author,publishYear,volume;
-    private Integer quantity;
+    private Integer quantity=0,issuedQuantity=0;
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
+
+    public Integer getIssuedQuantity() {
+        return issuedQuantity;
+    }
+
+    public void setIssuedQuantity(Integer issuedQuantity) {
+        this.issuedQuantity = issuedQuantity;
+    }
+
     @PrimaryKey(autoGenerate = true)
     private Integer id;
 
@@ -19,13 +30,14 @@ public class Book {
         this.id = id;
     }
 
-    public Book(String name, String author, String publishYear, Integer quantity,String volume,byte[] image) {
+    public Book(String name, String author, String publishYear, Integer quantity, String volume, byte[] image, Integer issuedQuantity) {
         this.name = name;
         this.author = author;
         this.publishYear = publishYear;
         this.quantity = quantity;
         this.volume= volume;
         this.image= image;
+        this.issuedQuantity=issuedQuantity;
     }
 
     public byte[]getImage() {
@@ -78,5 +90,11 @@ public class Book {
 
     public Integer getId() {
         return id;
+    }
+    public boolean isAvailable(){
+        if(quantity>issuedQuantity)
+            return true;
+        else
+            return false;
     }
 }

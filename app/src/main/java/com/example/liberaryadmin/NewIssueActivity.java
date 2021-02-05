@@ -5,14 +5,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -56,12 +53,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
         configDate();
 
     }
-
+    // configure date picker for maximum 20 days of issue
      private void configDate() {
         d_date.setMinDate(System.currentTimeMillis()+86400000);
-        d_date.setMaxDate(System.currentTimeMillis()+7*86400000);
+        d_date.setMaxDate(System.currentTimeMillis()+20*86400000);
      }
 
+     // Initialises views and variables
      private void init() {
 
         d_date=findViewById(R.id.NewIssueActivity_date);
@@ -89,7 +87,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
     }
 
-     @Override
+     @Override // if activity gets destroyed in configure change then data will restore
      protected void onStart() {
          super.onStart();
          if(customer!=null)
@@ -102,11 +100,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.NewIssueActivity_customer:
-                LiberaryViewModel.SAR_CALL_TAG=ACTIVITY_TAG;
+                LiberaryViewModel.SAR_CALL_TAG=ACTIVITY_TAG;  // telling which activity called
                 startActivityForResult(new Intent(getApplicationContext(),CustomerListActivity.class),CUSTOMER_TAG);
                 break;
             case R.id.NewIssueActivity_book:
-                LiberaryViewModel.SAR_CALL_TAG=ACTIVITY_TAG;
+                LiberaryViewModel.SAR_CALL_TAG=ACTIVITY_TAG;  // telling which activity called
                 startActivityForResult(new Intent(getApplicationContext(),BookListActivity.class),BOOK_TAG);
 
                 break;
@@ -119,20 +117,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
         }
     }
 
+    // checking if all details are filled
      private void check() {
         if(customer==null){
             Toast.makeText(this, "Select Customer", Toast.LENGTH_SHORT).show();
-            t_customerName.setError("Select Customer");
         }
         else if(book==null){
             Toast.makeText(this, "Select Book", Toast.LENGTH_SHORT).show();
-            t_bookName.setError("Select Book");
         }
         else{
             uploadIssue();
         }
      }
 
+     // uploading issue
      private void uploadIssue() {
         LiberaryViewModel model=new ViewModelProvider(this).get(LiberaryViewModel.class);
         String date;
@@ -142,14 +140,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
          IssuedBook issuedBook=new IssuedBook(book.getId(),customer.getId()
                  ,new CustomDate(System.currentTimeMillis()).dateToString(),date,customer.getName(),book.getName(),customer.getPhone());
         model.insertNewIssue(issuedBook);
+        book.setIssuedQuantity(book.getIssuedQuantity()+1); // increasing issued book quantity to keep the record that is book available or not
+        model.updateBook(book);
         screenShot();
      }
-
+    // shows a preview image .( We can add a share option to share the issue image )
      private void screenShot() {
              View v = linearLayout;
              v.setBackground(getDrawable(R.drawable.gradient_background));
              v.setDrawingCacheEnabled(true);
-         AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.newIssueDialog);
+         AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.MyDialogStyle);
          View itemView=getLayoutInflater().inflate(R.layout.snapshot_dialog_layout,null);
          dialog.setView(itemView).show();
          ImageView imageView=itemView.findViewById(R.id.Dialog_snapshot);
@@ -167,7 +167,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
      }
 
 
-     @Override
+     @Override  // gets book and customer objects that are selected
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==CUSTOMER_TAG&&resultCode==RESULT_OK&&data!=null){
@@ -181,6 +181,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
          }
     }
 
+    // setting customer data to view
      private void setCustomerData() {
          t_customerName.setText(customer.getName());
          Bitmap bitmap = Converter.byteToImage(customer.getImage());
@@ -194,6 +195,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
          }
 
      }
+
+     // setting book data too view
      private void setBookData() {
         t_bookName.setText(book.getName());
         t_authorName.setText(book.getAuthor());

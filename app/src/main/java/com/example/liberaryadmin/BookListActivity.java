@@ -42,6 +42,7 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         init();
+        // observes change in customer list and notifies to adapter to update
         viewModel.getAllBooks().observe(this, books -> {
             list=books;
            adapter.setBookList(books);
@@ -49,6 +50,7 @@ public class BookListActivity extends AppCompatActivity {
         });
     }
 
+    // Initialises views and variables
     private void init() {
         b_addButton=findViewById(R.id.ActivityBookList_add);
         i_back=findViewById(R.id.ActivityBookList_back);
@@ -62,11 +64,13 @@ public class BookListActivity extends AppCompatActivity {
         i_back.setOnClickListener(view->{
             super.onBackPressed();
         });
+
         b_addButton.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),AddBookActivity.class));
         });
         adapter.setOnBookClickListner(book -> {
             LiberaryViewModel.book=book;
+            // check if this activity is called by NewIssueActivity or not
                 if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
                     startActivityForResult(new Intent(getApplicationContext(),ViewBookActivity.class),NewIssueActivity.ACTIVITY_TAG);
                 }
@@ -75,6 +79,7 @@ public class BookListActivity extends AppCompatActivity {
                 }
         });
 
+        // listens to the change in text in search bar
         t_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -88,6 +93,7 @@ public class BookListActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                // filters the list according to search and set it to adapter
                 viewModel.getFilterBookList(list,s.toString()).observe(BookListActivity.this, (Observer<List<Book>>) books -> {
                     adapter.setBookList(books);
                     adapter.notifyDataSetChanged();
@@ -96,7 +102,7 @@ public class BookListActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+    @Override // just confirms that next activity executes nicely (Just boilerplate code)
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==NewIssueActivity.ACTIVITY_TAG&&resultCode==RESULT_OK){

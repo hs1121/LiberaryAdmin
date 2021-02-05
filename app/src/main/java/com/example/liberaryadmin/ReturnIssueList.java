@@ -6,18 +6,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.liberaryadmin.Adapters.IssueAdapter;
-import com.example.liberaryadmin.Helpers.Converter;
 import com.example.liberaryadmin.Helpers.CustomDate;
 import com.example.liberaryadmin.Model.LiberaryViewModel;
 import com.example.liberaryadmin.database.ObjectClasses.IssuedBook;
@@ -43,12 +40,14 @@ public class ReturnIssueList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_issue_list);
         init();
+        // observes list and notifies adapter
         model.getAllIssues().observe(this, list -> {
             this.list = list;
             adapter.setIssueList(list);
             adapter.notifyDataSetChanged();
         });
 
+        // listens if something is typed in search bar
         t_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -62,6 +61,7 @@ public class ReturnIssueList extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                    // observes the change in filtered list when text in search bar is changed
                     model.getFilterIssuedBookList(list,s.toString()).observe(ReturnIssueList.this, list -> {
                         adapter.setIssueList(list);
                         adapter.notifyDataSetChanged();
@@ -71,6 +71,7 @@ public class ReturnIssueList extends AppCompatActivity {
 
     }
 
+    // initialises views and variables
     private void init() {
         recyclerView=findViewById(R.id.ActivityReturnIssueList_recyclerView);
         i_back=findViewById(R.id.ActivityReturnIssueList_back);
@@ -90,8 +91,10 @@ public class ReturnIssueList extends AppCompatActivity {
         });
 
     }
+
+    // create dialog for conformation of return and also tells the penalty
     private void createDialog(){
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.MyDialogTheme);
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this,R.style.MyDialogStyle);
         View itemView=getLayoutInflater().inflate(R.layout.return_book_dialog_layout,null);
         dialog.setView(itemView);
         TextView t_bookName,t_customerName,t_phone,t_id,t_penalty;
@@ -107,7 +110,7 @@ public class ReturnIssueList extends AppCompatActivity {
 
 
         t_bookName.setText("Book : "+issuedBook.getBookName());
-        t_customerName.setText("Customer : "+issuedBook.getCustomerName());
+        t_customerName.setText("Customer :"+issuedBook.getCustomerName());
         t_phone.setText("Phone : "+issuedBook.getPhone());
         t_id.setText("Issue Id : "+issuedBook.getId().toString());
         int difference=CustomDate.difference(new CustomDate(System.currentTimeMillis()).dateToString(),issuedBook.getReturnDate());

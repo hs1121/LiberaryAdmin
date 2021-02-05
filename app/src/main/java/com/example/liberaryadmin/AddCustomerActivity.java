@@ -42,18 +42,9 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer);
-
         init();
-        if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG){
-            customer=LiberaryViewModel.customer;
-            t_address.setText(customer.getAddress());
-            t_phone.setText(customer.getPhone());
-            i_image.setImageBitmap(Converter.byteToImage(customer.getImage()));
-            t_name.setText(customer.getName());
-            b_button.setText("Update Customer");
-        }
     }
-
+    // Initialising views and variables
     private void init() {
         t_name=findViewById(R.id.AddCustomer_name);
         t_address=findViewById(R.id.AddCustomer_address);
@@ -69,14 +60,19 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
         cv_selectImage.setOnClickListener(this);
         b_back.setOnClickListener(this);
 
-
-
         String[] spinnerList={"1 Month","3 Months","6 Months","9 Months","12 Months"};
-
         ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.simple_spinner_item,spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         sp_membership.setAdapter(adapter);
+        // Check if CustumerListActivity called .if yes means called for updating and sets current customer data
+        if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG){
+            customer=LiberaryViewModel.customer;
+            t_address.setText(customer.getAddress());
+            t_phone.setText(customer.getPhone());
+            i_image.setImageBitmap(Converter.byteToImage(customer.getImage()));
+            t_name.setText(customer.getName());
+            b_button.setText("Update Customer");
+        }
 
     }
 
@@ -94,7 +90,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
-
+    // checking details
     private void check() {
         if(t_name.getText().toString().trim().isEmpty()){
             t_name.setError("Enter Book name");
@@ -108,13 +104,13 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
         else
             AddCustomer();
     }
-
+    // calling intent for gallery
     private void addImage() {
         Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,IMG_TAG);
     }
 
-    @Override
+    @Override // set image and sets to imageview
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==IMG_TAG&&resultCode==RESULT_OK){
@@ -122,7 +118,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
             i_image.setImageURI(uri);
         }
     }
-
+    // add or update customer
     private void AddCustomer() {
         String name,address,phone,registerDate,membershipStartDate,membershipEndDate;
         Integer membershipDuration;
@@ -138,14 +134,14 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
              bitmapDrawable = (BitmapDrawable) i_image.getDrawable();
         Bitmap bmp = bitmapDrawable.getBitmap();
         byte[] image = Converter.imageToByte(bmp);
-        if(image.length>150000){
+        if(image.length>150000){  // check image length
             Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
         }
         else {
             Customer customer = new Customer(name, phone, address, registerDate, membershipStartDate, membershipEndDate, image);
             LiberaryViewModel.customer=customer;
-            if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG) {
-                customer.setId(this.customer.getId());
+            if(LiberaryViewModel.SAR_CALL_TAG==CustomerListActivity.ACTIVITY_TAG) {  // Checking if set for updating
+                customer.setId(this.customer.getId());  // giving existing id to new customer object for update
                 viewModelInstance.updateCustomer(customer);
                 Toast.makeText(this, "Customer updated", Toast.LENGTH_SHORT).show();
             }

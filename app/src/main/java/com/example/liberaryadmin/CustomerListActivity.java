@@ -54,7 +54,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
             super.onBackPressed();
         });
     }
-
+    // Initialises views and variables
     private void init() {
         b_addButton=findViewById(R.id.ActivityCustomerList_add);
         i_back=findViewById(R.id.ActivityCustomerList_back);
@@ -65,6 +65,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
         recyclerView.setAdapter(adapter);
         viewModel=new ViewModelProvider(this).get(LiberaryViewModel.class);
 
+        // check if this activity is called by NewIssueActivity or not
         b_addButton.setOnClickListener(v -> {
             if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
                 startActivityForResult(new Intent(getApplicationContext(), AddCustomerActivity.class),NewIssueActivity.ACTIVITY_TAG);
@@ -73,6 +74,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
                 startActivity(new Intent(getApplicationContext(), AddCustomerActivity.class));
             }
         });
+        // removes add button when called by expiredMemberActivity .(No need to add customer in expires list )
         if(LiberaryViewModel.SAR_CALL_TAG==MainActivity.EXPIRED_MEMBER_TAG)
             b_addButton.setVisibility(View.GONE);
     }
@@ -80,6 +82,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
     @Override
     protected void onResume() {
         super.onResume();
+        // Listens change in text in search bar
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -93,23 +96,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
             @Override
             public void afterTextChanged(Editable s) {
-                viewModel.getFilterCustomerList(customerList,s.toString()).observe(CustomerListActivity.this, new Observer<List<Customer>>() {
-                    @Override
-                    public void onChanged(List<Customer> list) {
-                        adapter.setCustomerList(list);
-                        adapter.notifyDataSetChanged();
-                    }
+                // observes changes in filtered list
+                viewModel.getFilterCustomerList(customerList,s.toString()).observe(CustomerListActivity.this, list -> {
+                    adapter.setCustomerList(list);
+                    adapter.notifyDataSetChanged();
                 });
             }
         });
-        adapter.setOnCustomerClickListner(new CustomerAdapter.OnCostomerClickListner() {
-            @Override
-            public void onClick(Customer customer) {
-                Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
-                intent.putExtra("customer",customer);
-                startActivityForResult(intent,NewIssueActivity.ACTIVITY_TAG);
-            }
-
+        adapter.setOnCustomerClickListner(customer -> {
+            Intent intent=new Intent(getApplicationContext(),ViewCustomerActivity.class);
+            intent.putExtra("customer",customer);  // just used parsable for practice nothing else
+            startActivityForResult(intent,NewIssueActivity.ACTIVITY_TAG);
         });
     }
 

@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddBookActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int IMG_TAG = 1;
     private TextView t_name,t_author,t_year,t_volume;
+    private NumberPicker np_quantity;
     private CircleImageView i_image;
     private ImageView b_back;
     private Button b_button;
@@ -44,16 +46,9 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
         init();
-        if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){
-            book=LiberaryViewModel.book;
-            t_name.setText(book.getName());
-            t_author.setText(book.getAuthor());
-            t_year.setText(book.getPublishYear());
-            t_volume.setText(book.getVolume());
-            i_image.setImageBitmap(Converter.byteToImage(book.getImage()));
-        }
-    }
 
+    }
+    // Initialising the views and variables
     private void init() {
         t_name=findViewById(R.id.AddBook_name);
         t_author=findViewById(R.id.AddBook_author);
@@ -63,15 +58,33 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         b_button=findViewById(R.id.AddBook_addButton);
         cv_selectImage=findViewById(R.id.AddBook_addImage);
         b_back=findViewById(R.id.AddBook_back);
+        np_quantity=findViewById(R.id.AddBook_quantity);
         viewModelInstance=new ViewModelProvider(this).get(LiberaryViewModel.class);
 
         b_button.setOnClickListener(this);
         cv_selectImage.setOnClickListener(this);
         b_back.setOnClickListener(this);
 
+        // setting values of number picker
+        np_quantity.setMinValue(0);
+        np_quantity.setMaxValue(100);
+        np_quantity.setValue(0);
+
+        // Checks if book is set for updating by checking the activity tag , if yes then sets current details of the book
+        if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){
+            book=LiberaryViewModel.book;
+            t_name.setText(book.getName());
+            t_author.setText(book.getAuthor());
+            t_year.setText(book.getPublishYear());
+            t_volume.setText(book.getVolume());
+            i_image.setImageBitmap(Converter.byteToImage(book.getImage()));
+            np_quantity.setValue(book.getQuantity());
+
+        }
+
     }
 
-    @Override
+    @Override  // Tells what to do when view is clicked
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.AddBook_addButton:
@@ -85,7 +98,7 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
-
+    // Checks weather all details are filled or not
     private void check() {
         if(t_name.getText().toString().trim().isEmpty()){
             t_name.setError("Enter Book name");
@@ -103,13 +116,13 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         else
         addBook();
     }
-
+    // Calls intent to open gallery
     private void addImage() {
         Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,IMG_TAG);
     }
 
-    @Override
+    @Override  // gets image from storage and display .
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==IMG_TAG&&resultCode==RESULT_OK){
@@ -118,20 +131,23 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    // adds and updates book
     private void addBook() {
-        String name,author,volume,year;
+        String name,author,volume,year; int quantity=np_quantity.getValue();
         name=t_name.getText().toString();
         author=t_author.getText().toString();
         volume=t_volume.getText().toString();
         year=t_year.getText().toString();
         Bitmap bmp = ((BitmapDrawable)i_image.getDrawable()).getBitmap();
         byte[] image = Converter.imageToByte(bmp);
-        if(image.length>150000){
+        if(image.length>150000){   // image size check
             Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
-        }else {
-            Book book = new Book(name, author, year, 1, volume, image);
-            if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){
-                book.setId(this.book.getId());
+        }
+        else {
+            Book book = new Book(name, author, year, quantity, volume, image,this.book.getIssuedQuantity());
+
+            if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){  // check if book list called . Used in case of updating book
+                book.setId(this.book.getId());  // setting id to book object to replace existing book object in DB.
                 viewModelInstance.updateBook(book);
                 Toast.makeText(this, "Book updated", Toast.LENGTH_SHORT).show();
             }

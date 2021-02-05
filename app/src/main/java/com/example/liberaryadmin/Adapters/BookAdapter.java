@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.liberaryadmin.Helpers.Converter;
+import com.example.liberaryadmin.Model.LiberaryViewModel;
+import com.example.liberaryadmin.NewIssueActivity;
 import com.example.liberaryadmin.R;
 import com.example.liberaryadmin.database.ObjectClasses.Book;
 
@@ -47,6 +49,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.name.setText(book.getName());
         holder.author.setText("~By "+book.getAuthor());
         holder.volume.setText(book.getVolume());
+        // checking if newIssueActivity has called to check availablity of book for issue
+        if(LiberaryViewModel.SAR_CALL_TAG== NewIssueActivity.ACTIVITY_TAG){
+            int quantity=book.getQuantity()-book.getIssuedQuantity();
+            holder.quantity.setText("Qnt. "+String.valueOf(quantity));
+            if(quantity<=0)
+                holder.unclickable();
+        }
+        else
         holder.quantity.setText("Qnt. "+book.getQuantity().toString());
         try {
             Bitmap bitmap= Converter.byteToImage(book.getImage());
@@ -74,9 +84,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             volume=itemView.findViewById(R.id.BookList_volume);
             quantity=itemView.findViewById(R.id.BookList_quantity);
             image=itemView.findViewById(R.id.BookList_image);
+            //
             itemView.setOnClickListener(view->{
                 onBookClickListner.onClick(bookList.get(getAdapterPosition()));
             });
+        }
+        // make book unclickable if book is not available for issue
+        public void unclickable(){
+            itemView.setClickable(false);
+            itemView.setAlpha(0.5f);
         }
     }
     public interface OnBookClickListner{

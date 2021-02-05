@@ -17,17 +17,17 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.util.Date;
 
-public  class Converter {
+public  class Converter { // can use @converter for DB room library
     public static byte @NotNull [] imageToByte(Bitmap bmp){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 50, stream);
         byte[] image = stream.toByteArray();
         return image;
-    }
+    }  // converts bitmap to byte[] format. Used to store image to DB
     public static Bitmap byteToImage(byte[] imgByte){
         Bitmap bitmap = BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
       return bitmap;
-    }
+    }  // Converts byte[] to Bitmap formet . Used to fetch image from DB
 
 
 }

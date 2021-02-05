@@ -39,7 +39,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
 
-                    android:src="@drawable/ic_liberary_logo" />
+                    android:src="@drawable/new_issue" />
 
                 <View
                     android:layout_width="80dp"
@@ -83,7 +83,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_liberary_logo" />
+                    android:src="@drawable/ic_return_book" />
 
                 <View
                     android:layout_width="80dp"
@@ -182,7 +182,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_liberary_logo" />
+                    android:src="@drawable/ic_customer_profile" />
 
                 <View
                     android:layout_width="80dp"
@@ -232,11 +232,10 @@
                 android:padding="5dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
-
-                    android:src="@drawable/ic_liberary_logo" />
+                    android:src="@drawable/membership_expired" />
 
                 <View
                     android:layout_width="match_parent"

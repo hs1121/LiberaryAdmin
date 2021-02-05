@@ -25,8 +25,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
     private List<Customer> customerList=new ArrayList<>();
     private OnCostomerClickListner listner;
+    // gets customer list
     public void setCustomerList(List<Customer> customerList) {
-
+            // if ExpiredMember activity has called the filter list to show only those customers with expired membership
         if(LiberaryViewModel.SAR_CALL_TAG== MainActivity.EXPIRED_MEMBER_TAG){
             List<Customer> filterList=new ArrayList<>();
             for(Customer customer:customerList){
@@ -58,7 +59,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 holder.phone.setText("Phone : "+customer.getPhone());
         holder.regDate.setText("Reg. Date : "+customer.getRegisteredDate());
         holder.image.setImageBitmap(Converter.byteToImage(customer.getImage()));
-                //TODO add a if statement to change membershipEndDate form membership till to expired on
+
+        // if membership expired then set it unclickable
         if(CustomDate.isLess(CustomDate.stringToDate(customer.getMembershipEndDate()),new CustomDate(System.currentTimeMillis()))){
             holder.membershipEndDate.setText("Membership expired on : "+customer.getMembershipEndDate());
             if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG)
@@ -91,6 +93,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             });
 
         }
+        // to make a customer unclickable (if membership expired)
         public void unclickable(){
             itemView.setClickable(false);
             itemView.setAlpha(0.5f);

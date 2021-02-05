@@ -29,11 +29,12 @@ public class ViewBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_book);
         init();
         setBook();
+        // edit select listener
         t_editSelect.setOnClickListener(view->{
+            // check which activity called to perform required task
             if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG) {
                 setResult(RESULT_OK);
                 LiberaryViewModel.SAR_CALL_TAG = 0;
-
             }
             else {
                 LiberaryViewModel.SAR_CALL_TAG=BookListActivity.ACTIVITY_TAG;
@@ -43,7 +44,7 @@ public class ViewBookActivity extends AppCompatActivity {
         });
     }
 
-
+    // initialise views and variables
     private void init() {
         t_name=findViewById(R.id.ViewBook_name);
         t_author=findViewById(R.id.ViewBook_author);
@@ -60,10 +61,10 @@ public class ViewBookActivity extends AppCompatActivity {
         book= LiberaryViewModel.book;
 
         if(LiberaryViewModel.SAR_CALL_TAG==NewIssueActivity.ACTIVITY_TAG){
-            t_editSelect.setText("Select");
+            t_editSelect.setText("Select"); // change text from edit to select
         }
     }
-
+    //sets book data to views
     private void setBook() {
         t_name.setText(book.getName());
         t_author.setText(book.getAuthor());
