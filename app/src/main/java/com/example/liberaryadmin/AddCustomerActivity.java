@@ -134,7 +134,7 @@ public class AddCustomerActivity extends AppCompatActivity implements View.OnCli
              bitmapDrawable = (BitmapDrawable) i_image.getDrawable();
         Bitmap bmp = bitmapDrawable.getBitmap();
         byte[] image = Converter.imageToByte(bmp);
-        if(image.length>150000){  // check image length
+        if(image.length>250000){  // check image length
             Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
         }
         else {

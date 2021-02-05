@@ -140,11 +140,16 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
         year=t_year.getText().toString();
         Bitmap bmp = ((BitmapDrawable)i_image.getDrawable()).getBitmap();
         byte[] image = Converter.imageToByte(bmp);
-        if(image.length>150000){   // image size check
+        if(image.length>250000){   // image size check
             Toast.makeText(this, "Image size too big", Toast.LENGTH_LONG).show();
         }
         else {
-            Book book = new Book(name, author, year, quantity, volume, image,this.book.getIssuedQuantity());
+            int issuedQuantity=0;
+            if(this.book!=null) {
+                issuedQuantity = this.book.getIssuedQuantity();
+            }
+
+            Book book = new Book(name, author, year, quantity, volume, image,issuedQuantity);
 
             if(LiberaryViewModel.SAR_CALL_TAG==BookListActivity.ACTIVITY_TAG){  // check if book list called . Used in case of updating book
                 book.setId(this.book.getId());  // setting id to book object to replace existing book object in DB.
